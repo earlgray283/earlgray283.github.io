@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://earlray283.github.io/sitemap.xml
