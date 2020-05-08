@@ -1,8 +1,10 @@
 # The URL the site will be built for
-base_url = "https://earlgray283.github.io"
+base_url = "https://earlgray283.github.io/public"
 
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
+
+# default_language = "ja"
 
 # Whether to do syntax highlighting
 # Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
