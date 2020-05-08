@@ -1,5 +1,5 @@
 +++
-title="hello zola and github"
-date=2019-07-09
+title = "Hello Zola"
+date = 2020-05-08
 +++
-# zola でこんにちは
+# こんにちは Zola !!
