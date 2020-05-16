@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <!-- my space -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    <style type="text/css">
+        body {
+            font-size: 18px;
+        }
+    </style>
+
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    <!-- Enable responsiveness on mobile devices-->
+    <!-- viewport-fit=cover is to support iPhone X rounded corners and notch in landscape-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
+
+    <title></title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https:&#x2F;&#x2F;earlgray283.github.io&#x2F;public&#x2F;print.css" media="print">
+    <link rel="stylesheet" href="https:&#x2F;&#x2F;earlgray283.github.io&#x2F;public&#x2F;poole.css">
+    <link rel="stylesheet" href="https:&#x2F;&#x2F;earlgray283.github.io&#x2F;public&#x2F;hyde.css">
+    <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">-->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+
+    
+
+    
+    
+</head>
+
+<body class=" ">
+    
+    <div class="sidebar">
+        <div class="container sidebar-sticky">
+            <div class="sidebar-about">
+                
+                <a href="https:&#x2F;&#x2F;earlgray283.github.io&#x2F;public">
+                    <h1></h1>
+                </a>
+                
+                
+            </div>
+
+            <ul class="sidebar-nav">
+                
+                
+                
+            </ul>
+        </div>
+    </div>
+    
+
+    <div class="content container">
+        
+<div class="post">
+  <h1 class="post-title">関数の極限値の基本性質</h1>
+  <span class="post-date">2020-05-16</span>
+  <h2 id="shang-noguan-shu-noji-xian-nozheng-ming">商の関数の極限の証明</h2>
+<p>$
+\displaystyle \lim_{ x \to a } \frac{f(x)}{g(x)} = \frac{\alpha}{\beta} ( \beta \neq 0)
+$
+を証明する。</p>
+<p>$
+\displaystyle \lim_{ x \to a } g(x) = \beta
+$
+の定義より、<br />
+$
+\forall \epsilon \gt 0 
+$
+に対して
+$
+\exists \delta _g \gt 0 \ \mbox{ s.t.} ( \forall x, 0 \lt \vert x - a \vert \lt \delta _g \Rightarrow \vert \beta - g(x) \vert \lt \epsilon _g)
+$</p>
+<p>$
+\ \ \ \ \ \ \vert \beta - g(x) \vert \lt \epsilon _g
+$<br />
+$
+\Leftrightarrow - \epsilon _g \lt \beta - g(x) \lt \epsilon _g
+$<br />
+$
+\Leftrightarrow \beta - \epsilon _g \lt g(x) \lt \beta + \epsilon _g
+$</p>
+<p>$ \vert g(x) \vert $ は $\vert \beta - \epsilon _g \vert$ よりも大きいか、$\vert \beta + \epsilon _g \vert$ よりも大きいかのどちらかである。</p>
+<p>よって、$ L = min( \vert \beta - \epsilon _g \vert, \vert \beta + \epsilon _g \vert)$ とすると<br />
+$ \vert g(x) \vert \gt L $ が成り立つ。</p>
+<p>以上を踏まえて、$ \displaystyle \lim_{ x \to a } \frac{1}{g(x)} = \frac{1}{\beta} $ を証明する。</p>
+<p>$ \forall \epsilon _g \gt 0 $ に対して、
+$
+\exists \delta _g \gt 0 \ \mbox {s.t.} ( \forall x, 0 \lt \vert x - a \vert \lt \delta _g \Rightarrow \vert \frac{1}{\beta} - \frac{1}{g(x)} \vert &lt; \epsilon _g)
+$</p>
+<p>$\displaystyle \ \ \ \ | \frac{1}{\beta} - \frac{1}{g(x)} |$<br />
+$\displaystyle = \frac{|g(x) - \beta|}{|\beta||g(x)|} $</p>
+<p>ここで、$ L &gt; g(x), \ | \beta - \epsilon _g | &lt; \epsilon _g $より、</p>
+<p>$\displaystyle = \frac{|g(x) - \beta|}{|\beta||g(x)|} &lt; \frac{\epsilon _g}{L|\beta|} = \epsilon $</p>
+<p>よって、$ \displaystyle \lim_{ x \to a } \frac{1}{g(x)} = \frac{1}{\beta} $ が証明された。</p>
+<p>次に、$\displaystyle \lim_{ x \to a } \frac{f(x)}{g(x)} = \frac{\alpha}{\beta}$を証明する。</p>
+<p>$\displaystyle \frac{1}{g(x)} = h(x) $とすると、$\displaystyle \lim_{ x \to a } h(x) = \frac{1}{\beta}$</p>
+<p>$\displaystyle \lim_{ x \to a } f(x) = \alpha$と積の関数の極限の性質より、$\displaystyle \lim_{ x \to a } f(x)h(x) = \frac{\alpha}{\beta}$</p>
+<p>$\displaystyle \frac{1}{g(x)} = h(x)$ だったので、$\displaystyle \lim_{ x \to a } \frac{f(x)}{g(x)} = \frac{\alpha}{\beta}$</p>
+<p>以上より、$\displaystyle \lim_{ x \to a } \frac{f(x)}{g(x)} = \frac{\alpha}{\beta}$が証明された。</p>
+<h2 id="gan-xiang">感想</h2>
+<p>　この証明は一通り理解することができましたが、中々大変でした。$|g(x)| &gt; L$の証明、$ \lim_{ x \to a } \frac{1}{g(x)} = \frac{1}{\beta} $の証明を踏んで最後に$\lim_{ x \to a } \frac{f(x)}{g(x)} = \frac{\alpha}{\beta} ( \beta \neq 0)$ができるというボリュームの証明はこれがはじめてです。これからこの手の証明が増えていくため、ε-δ論法のトレーニングをしないといけないなと思います。
+　一通り理解することができたと述べましたが、疑問が1つあります。それは$L$を用いている理由です。$L$ を用いなくても、$\epsilon _g = g(x)|\beta|\epsilon$ と置けば 　$\epsilon$ でおさまるのではないかと思うのですが、それではダメなのでしょうか？$L$を定義している部分を見ればわかるのかもしれませんが、自分には冗長ではないかとしか思えませんでした・・・。</p>
+
+</div>
+
+    </div>
+
+</body>
+
+</html>

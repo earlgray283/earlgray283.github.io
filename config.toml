@@ -14,5 +14,9 @@ highlight_code = true
 build_search_index = true
 
 theme = "hyde"
+
+template = "custom.html"
 [extra]
+katex_enable = true
+katex_auto_render = true
 # Put all your custom variables here
