@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+        </script>
+    <style type="text/css">
+        body {
+            font-size: 16px;
+        }
+    </style>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    <!-- Enable responsiveness on mobile devices-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    <title>earlgray283&#x27;s diary - 関数の極限値の基本性質</title>
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css"
+        integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js"
+        integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/mathtex-script-type.min.js"
+        integrity="sha384-zWYbd0NBwgTsgIdFKVprSfTh1mbMPe5Hz1X3yY4Sd1h/K1cQoUe36OGwAGz/PcDy"
+        crossorigin="anonymous"></script>
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js"
+        integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    
+    
+    
+
+    
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;127.0.0.1:1111&#x2F;site.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css"
+        integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+    
+    
+
+    
+    
+</head>
+
+<body style="background-color: #faebdf;">
+    <div class="container">
+
+        <div id="mobile-navbar" class="mobile-navbar">
+            <div class="mobile-header-logo">
+                <a href="/" class="logo" style="font-size: 18px;">earlgray283&#x27;s diary</a>
+            </div>
+            <div class="mobile-navbar-icon icon-out">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
+            <ul class="mobile-menu-list">
+                
+                <li class="mobile-menu-item">
+                    <a href="http:&#x2F;&#x2F;127.0.0.1:1111">
+                        Home
+                    </a>
+                </li>
+                
+                <li class="mobile-menu-item">
+                    <a href="http:&#x2F;&#x2F;127.0.0.1:1111&#x2F;about">
+                        About
+                    </a>
+                </li>
+                
+                <li class="mobile-menu-item">
+                    <a href="http:&#x2F;&#x2F;127.0.0.1:1111&#x2F;category">
+                        Category
+                    </a>
+                </li>
+                
+            </ul>
+        </nav>
+
+        <header id="header">
+            <div class="logo"><a href="http:&#x2F;&#x2F;127.0.0.1:1111">earlgray283&#x27;s diary</a></div>
+            <nav class="menu">
+                <ul>
+                    
+                    <li>
+                        <a href="http:&#x2F;&#x2F;127.0.0.1:1111">
+                            Home
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="http:&#x2F;&#x2F;127.0.0.1:1111&#x2F;about">
+                            About
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="http:&#x2F;&#x2F;127.0.0.1:1111&#x2F;category">
+                            Category
+                        </a>
+                    </li>
+                    
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <div class="content" id="mobile-panel">
+                
+
+
+<div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+            <ul>
+                
+                <li>
+                    <a href="http://127.0.0.1:1111/math/#shang-noguan-shu-noji-xian-nozheng-ming" class="toc-link">商の関数の極限の証明</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="http://127.0.0.1:1111/math/#gan-xiang" class="toc-link">感想</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="http://127.0.0.1:1111/math/#can-kao-wen-xian" class="toc-link">参考文献</a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<article class="post">
+    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="http:&#x2F;&#x2F;127.0.0.1:1111&#x2F;math&#x2F;">関数の極限値の基本性質</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2020-05-16</span>
+            
+        </div>
+    </header>
+
+    <div class="post-content">
+      <h2 id="shang-noguan-shu-noji-xian-nozheng-ming">商の関数の極限の証明</h2>
+<p>$
+\displaystyle \lim_{ x \to a } \frac{f(x)}{g(x)} = \frac{\alpha}{\beta} ( \beta \neq 0)
+$
+を証明する。</p>
+<p>$
+\displaystyle \lim_{ x \to a } g(x) = \beta
+$
+の定義より、<br />
+$
+\forall \epsilon \gt 0 
+$
+に対して
+$
+\exists \delta _g \gt 0 \ \mbox{ s.t.} ( \forall x, 0 \lt \vert x - a \vert \lt \delta _g \Rightarrow \vert \beta - g(x) \vert \lt \epsilon _g)
+$</p>
+<p>$
+\ \ \ \ \ \ \vert \beta - g(x) \vert \lt \epsilon _g
+$<br />
+$
+\Leftrightarrow - \epsilon _g \lt \beta - g(x) \lt \epsilon _g
+$<br />
+$
+\Leftrightarrow \beta - \epsilon _g \lt g(x) \lt \beta + \epsilon _g
+$</p>
+<p>$ \vert g(x) \vert $ は $\vert \beta - \epsilon _g \vert$ よりも大きいか、$\vert \beta + \epsilon _g \vert$ よりも大きいかのどちらかである。</p>
+<p>よって、$ L = min( \vert \beta - \epsilon _g \vert, \vert \beta + \epsilon _g \vert)$ とすると<br />
+$ \vert g(x) \vert \gt L $ が成り立つ。</p>
+<p>以上を踏まえて、$ \displaystyle \lim_{ x \to a } \frac{1}{g(x)} = \frac{1}{\beta} $ を証明する。</p>
+<p>$ \forall \epsilon _g \gt 0 $ に対して、
+$
+\exists \delta _g \gt 0 \ \mbox {s.t.} ( \forall x, 0 \lt \vert x - a \vert \lt \delta _g \Rightarrow \vert \frac{1}{\beta} - \frac{1}{g(x)} \vert &lt; \epsilon _g)
+$</p>
+<p>$\displaystyle \ \ \ \ | \frac{1}{\beta} - \frac{1}{g(x)} |$<br />
+$\displaystyle = \frac{|g(x) - \beta|}{|\beta||g(x)|} $</p>
+<p>ここで、$ L &gt; g(x), \ | \beta - \epsilon _g | &lt; \epsilon _g $より、</p>
+<p>$\displaystyle = \frac{|g(x) - \beta|}{|\beta||g(x)|} &lt; \frac{\epsilon _g}{L|\beta|} = \epsilon $</p>
+<p>よって、$ \displaystyle \lim_{ x \to a } \frac{1}{g(x)} = \frac{1}{\beta} $ が証明された。</p>
+<p>次に、$\displaystyle \lim_{ x \to a } \frac{f(x)}{g(x)} = \frac{\alpha}{\beta}$を証明する。</p>
+<p>$\displaystyle \frac{1}{g(x)} = h(x) $とすると、$\displaystyle \lim_{ x \to a } h(x) = \frac{1}{\beta}$</p>
+<p>$\displaystyle \lim_{ x \to a } f(x) = \alpha$と積の関数の極限の性質より、$\displaystyle \lim_{ x \to a } f(x)h(x) = \frac{\alpha}{\beta}$</p>
+<p>$\displaystyle \frac{1}{g(x)} = h(x)$ だったので、$\displaystyle \lim_{ x \to a } \frac{f(x)}{g(x)} = \frac{\alpha}{\beta}$</p>
+<p>以上より、$\displaystyle \lim_{ x \to a } \frac{f(x)}{g(x)} = \frac{\alpha}{\beta}$が証明された。</p>
+<h2 id="gan-xiang">感想</h2>
+<p>　この証明は一通り理解することができましたが、中々大変でした。$|g(x)| &gt; L$の証明、$ \lim_{ x \to a } \frac{1}{g(x)} = \frac{1}{\beta} $の証明を踏んで最後に$\lim_{ x \to a } \frac{f(x)}{g(x)} = \frac{\alpha}{\beta} ( \beta \neq 0)$ができるというボリュームの証明はこれがはじめてです。これからこの手の証明が増えていくため、ε-δ論法のトレーニングをしないといけないなと思います。<br />
+　一通り理解することができたと述べましたが、疑問が1つあります。それは$L$を用いている理由です。$L$ を用いなくても、$\epsilon _g = g(x)|\beta|\epsilon$ と置けば 　$\epsilon$ でおさまるのではないかと思うのですが、それではダメなのでしょうか？$L$を定義している部分を見ればわかるのかもしれませんが、自分には冗長ではないかとしか思えませんでした・・・。</p>
+<h2 id="can-kao-wen-xian">参考文献</h2>
+<p><a href="https://onedrive.live.com/redir?resid=8B746337CD12996A!931&amp;authkey=!APkSKTOBIcqRAY8&amp;ithint=file%2cpptx&amp;e=4seRlm">基礎数学演習　第四回スライド</a><br />
+<a href="https://risalc.info/src/limit-function.html#quo">理数アラカルト　関数の商の極限</a></p>
+
+    </div>
+
+    
+    
+
+    <div class="post-footer">
+        
+            
+            
+                <div class="post-nav">
+                    
+                    
+                        <a class="next" href="http:&#x2F;&#x2F;127.0.0.1:1111&#x2F;hello-world&#x2F;">ブログはじめました ›</a>
+                    
+                    
+                    
+                </div>
+            
+
+        
+
+    </div>
+
+    
+    
+</article>
+
+
+            </div>
+        </main>
+
+        
+        
+    </div>
+
+    
+    <script type="text/javascript" src="http:&#x2F;&#x2F;127.0.0.1:1111&#x2F;even.js"></script>
+    
+<script src="/livereload.js?port=1024&amp;mindelay=10"></script></body>
+
+</html>
