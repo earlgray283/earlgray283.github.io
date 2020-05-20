@@ -1,0 +1,3 @@
+[submodule "even"]
+	path = themes/even
+	url = git@github.com:getzola/even.git
