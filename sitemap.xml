@@ -7,9 +7,31 @@
         </url>
     
         <url>
-            <loc>https://earlgray283.github.io/public/content/</loc>
+            <loc>https://earlgray283.github.io/public/about-string/</loc>
             
-                <lastmod>2020-05-09</lastmod>
+                <lastmod>2020-05-18</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://earlgray283.github.io/public/about/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://earlgray283.github.io/public/categories/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://earlgray283.github.io/public/categories/blog/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://earlgray283.github.io/public/hello-world/</loc>
+            
+                <lastmod>2020-05-18</lastmod>
             
         </url>
     
@@ -17,6 +39,11 @@
             <loc>https://earlgray283.github.io/public/math/</loc>
             
                 <lastmod>2020-05-16</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://earlgray283.github.io/public/page/1/</loc>
             
         </url>
     
