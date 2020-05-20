@@ -2,18 +2,18 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>earlgray283&#x27;s diary</title>
-        <link>http://127.0.0.1:1111</link>
+        <link>https://earlgray283.github.io/public</link>
         <description>Computer Science diary</description>
         <generator>Zola</generator>
         <language>en</language>
-        <atom:link href="http://127.0.0.1:1111/categories/blog/rss.xml" rel="self" type="application/rss+xml"/>
+        <atom:link href="https://earlgray283.github.io/public/categories/blog/rss.xml" rel="self" type="application/rss+xml"/>
         <lastBuildDate>Mon, 18 May 2020 00:00:00 +0000</lastBuildDate>
         
             <item>
                 <title>rust の String をよく知らなくてコンテストで爆死したお話</title>
                 <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
-                <link>http://127.0.0.1:1111/about-string/</link>
-                <guid>http://127.0.0.1:1111/about-string/</guid>
+                <link>https://earlgray283.github.io/public/about-string/</link>
+                <guid>https://earlgray283.github.io/public/about-string/</guid>
                 <description>&lt;h1 id=&quot;shi-nofa-duan&quot;&gt;事の発端&lt;&#x2F;h1&gt;
 &lt;p&gt;それは abc168-A で起きた出来事でした。&lt;br &#x2F;&gt;
 一の位で場合分けをすれば良いとのことで、私は普通に次のコードを書きました。&lt;&#x2F;p&gt;
@@ -23,19 +23,37 @@
     ...
 }
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;C++ をやっていた人間であれば、こんな感じのコードを書くはずです。
-私はなんの疑いもなくウキウキで&lt;code&gt;cargo run&lt;&#x2F;code&gt;をしましたが・・・&lt;em&gt;通りません&lt;&#x2F;em&gt;
-は？？？？？？？？？？？？？？？？？？？cargo バグったか？？？？？？？？？？？&lt;br &#x2F;&gt;
-と思いながらターミナル再起動したり&lt;code&gt;cargo run&lt;&#x2F;code&gt;連打したりしましたが、&lt;em&gt;通りません&lt;&#x2F;em&gt;&lt;br &#x2F;&gt;
-落ち着いてエラーメッセージを読むと、何やら&lt;&#x2F;p&gt;
+&lt;p&gt;C++ をやっていた人間であれば、こんな感じのコードを書くはずです。&lt;&#x2F;p&gt;
+&lt;p&gt;私はなんの疑いもなくウキウキで&lt;code&gt;cargo run&lt;&#x2F;code&gt;をしましたが・・・&lt;strong&gt;通りません&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;は？？？？？？？？？？？？？？？？？？？cargo バグったか？？？？？？？？？？？&lt;br &#x2F;&gt;
+と思いながらターミナル再起動したり&lt;code&gt;cargo run&lt;&#x2F;code&gt;連打したりしましたが、&lt;strong&gt;通りません&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;思わず台パンをしてしまいましたが、落ち着いてからエラーメッセージを読むとこんなエラーメッセージが出ていました。&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;span style=&quot;color:#b48ead;&quot;&gt;match&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; s[s.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;len&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;()-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;]{
+    　^^^^^^^^^^^^^ `std::string::String` cannot be indexed by `&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;usize&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;`
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;ふむふむ、どうやら String の添え字アクセスはできないようですね。
+こうゆうときに限って解決法書いてくれない rustc 本当に嫌いです。&lt;&#x2F;p&gt;
+&lt;p&gt;ということで死に物狂いで調べたので、それをまとめます。&lt;&#x2F;p&gt;
+&lt;h1 id=&quot;jie-lun&quot;&gt;結論&lt;&#x2F;h1&gt;
+&lt;p&gt;結論から言うと、Vec&lt;char&gt; に変換してあげれば ok です。&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; s: String = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;read_string&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;();
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; s: Vec&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;char&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;gt; = s.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;chars&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;().&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;collect&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;();
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;match&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; s[s.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;len&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;()-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;] {
+    ...
+}
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;ただ、C++ でできることが rust でできないことが納得できなかったので調べてみました。&lt;&#x2F;p&gt;
+&lt;h1 id=&quot;dousite&quot;&gt;どうして&lt;&#x2F;h1&gt;
 </description>
             </item>
         
             <item>
                 <title>ブログはじめました</title>
                 <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
-                <link>http://127.0.0.1:1111/hello-world/</link>
-                <guid>http://127.0.0.1:1111/hello-world/</guid>
+                <link>https://earlgray283.github.io/public/hello-world/</link>
+                <guid>https://earlgray283.github.io/public/hello-world/</guid>
                 <description>&lt;h1 id=&quot;aisatu&quot;&gt;あいさつ&lt;&#x2F;h1&gt;
 &lt;p&gt;　rust や競プロの備忘録として使えたらなと思います。あと大学の数学もまとめていきたいです(主に latex の練習)。 &lt;strong&gt;対戦よろしくお願いします。&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
 </description>

@@ -2,48 +2,48 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
         <url>
-            <loc>http://127.0.0.1:1111/</loc>
+            <loc>https://earlgray283.github.io/public/</loc>
             
         </url>
     
         <url>
-            <loc>http://127.0.0.1:1111/about-string/</loc>
+            <loc>https://earlgray283.github.io/public/about-string/</loc>
             
                 <lastmod>2020-05-18</lastmod>
             
         </url>
     
         <url>
-            <loc>http://127.0.0.1:1111/about/</loc>
+            <loc>https://earlgray283.github.io/public/about/</loc>
             
         </url>
     
         <url>
-            <loc>http://127.0.0.1:1111/categories/</loc>
+            <loc>https://earlgray283.github.io/public/categories/</loc>
             
         </url>
     
         <url>
-            <loc>http://127.0.0.1:1111/categories/blog/</loc>
+            <loc>https://earlgray283.github.io/public/categories/blog/</loc>
             
         </url>
     
         <url>
-            <loc>http://127.0.0.1:1111/hello-world/</loc>
+            <loc>https://earlgray283.github.io/public/hello-world/</loc>
             
                 <lastmod>2020-05-18</lastmod>
             
         </url>
     
         <url>
-            <loc>http://127.0.0.1:1111/math/</loc>
+            <loc>https://earlgray283.github.io/public/math/</loc>
             
                 <lastmod>2020-05-16</lastmod>
             
         </url>
     
         <url>
-            <loc>http://127.0.0.1:1111/page/1/</loc>
+            <loc>https://earlgray283.github.io/public/page/1/</loc>
             
         </url>
     
