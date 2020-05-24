@@ -146,11 +146,6 @@
                     
                 </li>
                 
-                <li>
-                    <a href="https://earlgray283.github.io/public/about-string/#dousite" class="toc-link">どうして</a>
-                    
-                </li>
-                
             </ul>
         </nav>
     </div>
@@ -189,8 +184,7 @@
     　^^^^^^^^^^^^^ `std::string::String` cannot be indexed by `</span><span style="color:#b48ead;">usize</span><span style="color:#c0c5ce;">`
 </span></pre>
 <p>ふむふむ、どうやら String の添え字アクセスはできないようですね。
-こうゆうときに限って解決法書いてくれない rustc 本当に嫌いです。</p>
-<p>ということで死に物狂いで調べたので、それをまとめます。</p>
+こうゆうときに限って解決法書いてくれない rustc 本当に嫌いです。どうすればええんや・・・</p>
 <h1 id="jie-lun">結論</h1>
 <p>結論から言うと、Vec<char> に変換してあげれば ok です。</p>
 <pre style="background-color:#2b303b;">
@@ -200,8 +194,7 @@
     ...
 }
 </span></pre>
-<p>ただ、C++ でできることが rust でできないことが納得できなかったので調べてみました。</p>
-<h1 id="dousite">どうして</h1>
+<p>つらい</p>
 
     </div>
 
@@ -216,6 +209,8 @@
                     
                         <a class="previous" href="https:&#x2F;&#x2F;earlgray283.github.io&#x2F;public&#x2F;hello-world&#x2F;">‹ ブログはじめました</a>
                     
+                    
+                        <a class="next" href="https:&#x2F;&#x2F;earlgray283.github.io&#x2F;public&#x2F;ctf4b&#x2F;">Beginner&#x27;s CTF 2020 Writeup ›</a>
                     
                     
                     
