@@ -1,0 +1,4 @@
+baseURL = "https://earlgray283.github.io"
+languageCode = "ja"
+title = "earlgray の日記帳"
+theme = "hugo-theme-dream"
