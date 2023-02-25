@@ -30,7 +30,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@astrojs/react", "virtual:4afab07a79d943702fd7e5bcae2843e9a2ca71c1da3723282bcdc1fad29d680c65b3a7fe5500cbe470bda4863ff935eabb191be9faa7b91b4bdf9cf2176df0ba#npm:2.0.2"],\
             ["@astrojs/tailwind", "virtual:4afab07a79d943702fd7e5bcae2843e9a2ca71c1da3723282bcdc1fad29d680c65b3a7fe5500cbe470bda4863ff935eabb191be9faa7b91b4bdf9cf2176df0ba#npm:3.0.1"],\
-            ["@heroicons/react", "virtual:4afab07a79d943702fd7e5bcae2843e9a2ca71c1da3723282bcdc1fad29d680c65b3a7fe5500cbe470bda4863ff935eabb191be9faa7b91b4bdf9cf2176df0ba#npm:2.0.16"],\
             ["@types/react", "npm:18.0.28"],\
             ["@types/react-dom", "npm:18.0.11"],\
             ["astro", "npm:2.0.15"],\
@@ -816,28 +815,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@gar-promisify-npm-1.1.3-ac1a325862-4059f790e2.zip/node_modules/@gar/promisify/",\
           "packageDependencies": [\
             ["@gar/promisify", "npm:1.1.3"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@heroicons/react", [\
-        ["npm:2.0.16", {\
-          "packageLocation": "./.yarn/cache/@heroicons-react-npm-2.0.16-ce9dfa3c94-1e51bfec72.zip/node_modules/@heroicons/react/",\
-          "packageDependencies": [\
-            ["@heroicons/react", "npm:2.0.16"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
-        ["virtual:4afab07a79d943702fd7e5bcae2843e9a2ca71c1da3723282bcdc1fad29d680c65b3a7fe5500cbe470bda4863ff935eabb191be9faa7b91b4bdf9cf2176df0ba#npm:2.0.16", {\
-          "packageLocation": "./.yarn/__virtual__/@heroicons-react-virtual-e2b05fef8d/0/cache/@heroicons-react-npm-2.0.16-ce9dfa3c94-1e51bfec72.zip/node_modules/@heroicons/react/",\
-          "packageDependencies": [\
-            ["@heroicons/react", "virtual:4afab07a79d943702fd7e5bcae2843e9a2ca71c1da3723282bcdc1fad29d680c65b3a7fe5500cbe470bda4863ff935eabb191be9faa7b91b4bdf9cf2176df0ba#npm:2.0.16"],\
-            ["@types/react", "npm:18.0.28"],\
-            ["react", "npm:18.2.0"]\
-          ],\
-          "packagePeers": [\
-            "@types/react",\
-            "react"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -2111,7 +2088,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["earlgray283.github.io", "workspace:."],\
             ["@astrojs/react", "virtual:4afab07a79d943702fd7e5bcae2843e9a2ca71c1da3723282bcdc1fad29d680c65b3a7fe5500cbe470bda4863ff935eabb191be9faa7b91b4bdf9cf2176df0ba#npm:2.0.2"],\
             ["@astrojs/tailwind", "virtual:4afab07a79d943702fd7e5bcae2843e9a2ca71c1da3723282bcdc1fad29d680c65b3a7fe5500cbe470bda4863ff935eabb191be9faa7b91b4bdf9cf2176df0ba#npm:3.0.1"],\
-            ["@heroicons/react", "virtual:4afab07a79d943702fd7e5bcae2843e9a2ca71c1da3723282bcdc1fad29d680c65b3a7fe5500cbe470bda4863ff935eabb191be9faa7b91b4bdf9cf2176df0ba#npm:2.0.16"],\
             ["@types/react", "npm:18.0.28"],\
             ["@types/react-dom", "npm:18.0.11"],\
             ["astro", "npm:2.0.15"],\
