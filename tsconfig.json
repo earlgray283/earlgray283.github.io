@@ -1,3 +1,7 @@
 {
-  "extends": "astro/tsconfigs/base"
+  "extends": "astro/tsconfigs/base",
+  "compilerOptions": {
+    "lib": ["ESNext"],
+    "importsNotUsedAsValues": "error"
+  }
 }
