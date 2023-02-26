@@ -30,6 +30,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@astrojs/react", "virtual:4afab07a79d943702fd7e5bcae2843e9a2ca71c1da3723282bcdc1fad29d680c65b3a7fe5500cbe470bda4863ff935eabb191be9faa7b91b4bdf9cf2176df0ba#npm:2.0.2"],\
             ["@astrojs/tailwind", "virtual:4afab07a79d943702fd7e5bcae2843e9a2ca71c1da3723282bcdc1fad29d680c65b3a7fe5500cbe470bda4863ff935eabb191be9faa7b91b4bdf9cf2176df0ba#npm:3.0.1"],\
+            ["@types/node", "npm:18.14.1"],\
             ["@types/react", "npm:18.0.28"],\
             ["@types/react-dom", "npm:18.0.11"],\
             ["@yarnpkg/pnpify", "npm:4.0.0-rc.39"],\
@@ -2440,6 +2441,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["earlgray283.github.io", "workspace:."],\
             ["@astrojs/react", "virtual:4afab07a79d943702fd7e5bcae2843e9a2ca71c1da3723282bcdc1fad29d680c65b3a7fe5500cbe470bda4863ff935eabb191be9faa7b91b4bdf9cf2176df0ba#npm:2.0.2"],\
             ["@astrojs/tailwind", "virtual:4afab07a79d943702fd7e5bcae2843e9a2ca71c1da3723282bcdc1fad29d680c65b3a7fe5500cbe470bda4863ff935eabb191be9faa7b91b4bdf9cf2176df0ba#npm:3.0.1"],\
+            ["@types/node", "npm:18.14.1"],\
             ["@types/react", "npm:18.0.28"],\
             ["@types/react-dom", "npm:18.0.11"],\
             ["@yarnpkg/pnpify", "npm:4.0.0-rc.39"],\
