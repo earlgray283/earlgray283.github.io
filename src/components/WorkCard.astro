@@ -1,0 +1,46 @@
+---
+import { toISOString } from '../utils/date';
+
+export interface Props {
+  title: string;
+  articleURL?: string;
+  since: Date;
+  until?: Date;
+  summary?: string;
+}
+
+const { title, since, until, summary, articleURL }: Props = Astro.props;
+---
+
+<li class='mb-10 ml-6'>
+  <div
+    class='absolute w-6 h-6 bg-gray-200 rounded-full mt-1.5 -left-3 border border-white dark:border-gray-900 dark:bg-dark-iceblue'
+  >
+  </div>
+  <div class='p-1'>
+    <h3 class='text-xl dark:text-white'>
+      {title}
+    </h3>
+    <p class='text-gray-400'>
+      <time datetime={since.toDateString()}>{toISOString(since)}</time>
+      -
+      <time datetime={until ? until.toDateString() : new Date().toDateString()}>
+        {until ? toISOString(until) : 'now'}
+      </time>
+    </p>
+    <div>
+      {
+        articleURL && (
+          <a
+            class='bg-blue-100 hover:bg-blue-200 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400'
+            href={articleURL}
+            target='_blank'
+          >
+            Article
+          </a>
+        )
+      }
+    </div>
+    <p class='text-sm text-white'>{summary}</p>
+  </div>
+</li>
