@@ -37,6 +37,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["astro", "npm:2.0.15"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:4afab07a79d943702fd7e5bcae2843e9a2ca71c1da3723282bcdc1fad29d680c65b3a7fe5500cbe470bda4863ff935eabb191be9faa7b91b4bdf9cf2176df0ba#npm:18.2.0"],\
+            ["sass", "npm:1.58.3"],\
             ["tailwindcss", "virtual:4afab07a79d943702fd7e5bcae2843e9a2ca71c1da3723282bcdc1fad29d680c65b3a7fe5500cbe470bda4863ff935eabb191be9faa7b91b4bdf9cf2176df0ba#npm:3.2.7"],\
             ["typescript", "patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=ad5954"]\
           ],\
@@ -2448,6 +2449,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["astro", "npm:2.0.15"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:4afab07a79d943702fd7e5bcae2843e9a2ca71c1da3723282bcdc1fad29d680c65b3a7fe5500cbe470bda4863ff935eabb191be9faa7b91b4bdf9cf2176df0ba#npm:18.2.0"],\
+            ["sass", "npm:1.58.3"],\
             ["tailwindcss", "virtual:4afab07a79d943702fd7e5bcae2843e9a2ca71c1da3723282bcdc1fad29d680c65b3a7fe5500cbe470bda4863ff935eabb191be9faa7b91b4bdf9cf2176df0ba#npm:3.2.7"],\
             ["typescript", "patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=ad5954"]\
           ],\
@@ -3229,6 +3231,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/ignore-npm-5.2.4-fbe6e989e5-3d4c309c60.zip/node_modules/ignore/",\
           "packageDependencies": [\
             ["ignore", "npm:5.2.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["immutable", [\
+        ["npm:4.2.4", {\
+          "packageLocation": "./.yarn/cache/immutable-npm-4.2.4-f20272bc9b-3be84eded3.zip/node_modules/immutable/",\
+          "packageDependencies": [\
+            ["immutable", "npm:4.2.4"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -5456,6 +5467,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/safer-buffer-npm-2.1.2-8d5c0b705e-cab8f25ae6.zip/node_modules/safer-buffer/",\
           "packageDependencies": [\
             ["safer-buffer", "npm:2.1.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["sass", [\
+        ["npm:1.58.3", {\
+          "packageLocation": "./.yarn/cache/sass-npm-1.58.3-8afd137ed0-35a2b98c03.zip/node_modules/sass/",\
+          "packageDependencies": [\
+            ["sass", "npm:1.58.3"],\
+            ["chokidar", "npm:3.5.3"],\
+            ["immutable", "npm:4.2.4"],\
+            ["source-map-js", "npm:1.0.2"]\
           ],\
           "linkType": "HARD"\
         }]\
