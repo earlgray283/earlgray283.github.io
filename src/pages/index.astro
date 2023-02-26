@@ -1,81 +1,122 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
+import { HeroSection } from '../components/HeroSection';
+import SkillCard from '../components/SkillCard.astro';
+import WorkCard from '../components/WorkCard.astro';
 ---
 
-<Layout title="Welcome to Astro.">
-	<main>
-		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
-		<p class="instructions">
-			To get started, open the directory <code>src/pages</code> in your project.<br />
-			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-		</p>
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="https://docs.astro.build/"
-				title="Documentation"
-				body="Learn how Astro works and explore the official API docs."
-			/>
-			<Card
-				href="https://astro.build/integrations/"
-				title="Integrations"
-				body="Supercharge your project with new frameworks and libraries."
-			/>
-			<Card
-				href="https://astro.build/themes/"
-				title="Themes"
-				body="Explore a galaxy of community-built starter themes."
-			/>
-			<Card
-				href="https://astro.build/chat/"
-				title="Community"
-				body="Come say hi to our amazing Discord community. ❤️"
-			/>
-		</ul>
-	</main>
-</Layout>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <meta name='generator' content={Astro.generator} />
+    <title>earlgray's portfolio</title>
+  </head>
+  <body class='animate-text-focus-in-1000'>
+    <main>
+      <div class='h-screen flex justify-center'>
+        <div class='flex flex-col items-center p-4 pt-40'>
+          <img class='rounded-full h-[12rem] my-2' src='/profile.png' />
+          <p class='text-white font-mono text-3xl'>earlgray</p>
+          <div class='flex items-start my-1'>
+            <a
+              href='https://github.com/earlgray283'
+              target='_blank'
+              class='mx-2'
+            >
+              <img src='/github.svg' class='w-[1.4rem] h-[1.4rem]' />
+            </a>
+            <a
+              href='https://twitter.com/earlgray329'
+              target='_blank'
+              class='mx-2'
+            >
+              <img src='/twitter.svg' class='w-6 h-6' />
+            </a>
+          </div>
+          <ul class='text-white text-xs mt-6 table'>
+            <li class='table-row'>
+              <b class='table-cell pr-1'>所属</b>: 静岡大学情報学部情報科学科
+            </li>
+            <li class='table-row'>
+              <b class='table-cell pr-1'>学年</b>: B3
+            </li>
+            <li class='table-row'>
+              <b class='table-cell pr-1'>研究室</b>: 大木研究室(セキュリティ)
+            </li>
+            <li class='table-row'>
+              <b class='table-cell pr-1'>興味</b>: Web 開発, 競技プログラミング
+            </li>
+          </ul>
+        </div>
+      </div>
 
-<style>
-	main {
-		margin: auto;
-		padding: 1.5rem;
-		max-width: 60ch;
-	}
-	h1 {
-		font-size: 3rem;
-		font-weight: 800;
-		margin: 0;
-	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
-	.instructions {
-		line-height: 1.6;
-		margin: 1rem 0;
-		border: 1px solid rgba(var(--accent), 25%);
-		background-color: white;
-		padding: 1rem;
-		border-radius: 0.4rem;
-	}
-	.instructions code {
-		font-size: 0.875em;
-		font-weight: bold;
-		background: rgba(var(--accent), 12%);
-		color: rgb(var(--accent));
-		border-radius: 4px;
-		padding: 0.3em 0.45em;
-	}
-	.instructions strong {
-		color: rgb(var(--accent));
-	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 1rem;
-		padding: 0;
-	}
+      <div class='h-screen'>
+        <div class='px-10 pt-40 sm:px-28'>
+          <h1 class='text-3xl'>Experience</h1>
+          <div class='ml-4 mt-2'>
+            <ol
+              class='border-l-2 relative border-gray-200 dark:border-gray-700'
+            >
+              <WorkCard
+                title='(Part-time job) Development Assistant at Kurusugawa Computer, Ltd.'
+                since={new Date('2020-07-27')}
+              />
+              <WorkCard
+                title='(Oursourcing) Software Engineer at Knightso LLC'
+                since={new Date('2022-04-01')}
+              />
+              <WorkCard
+                title='(Internship) Backend Engineer at Mirrativ Inc.'
+                since={new Date('2022-10-17')}
+                until={new Date('2022-12-16')}
+                articleURL='https://tech.mirrativ.stream/entry/2022/12/15/100000'
+              />
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class='h-screen'>
+        <div class='px-10 pt-40 sm:px-28'>
+          <h1 class='text-3xl'>Skills</h1>
+          <div class='ml-4 mt-2'>
+            <ol>
+              <SkillCard
+                name='Go'
+                since={new Date('2019-12-01')}
+                usecases={['Web backend']}
+              />
+              <SkillCard
+                name='Rust'
+                since={new Date('2020-04-14')}
+                usecases={['Web backend', 'Competitive programming']}
+              />
+              <SkillCard
+                name='React.js'
+                since={new Date('2021-04-01')}
+                usecases={['Web frontend']}
+              />
+              <SkillCard
+                name='Astro.js'
+                since={new Date('2023-02-24')}
+                usecases={['Web frontend']}
+                summary='This portfolio is made with this.'
+              />
+            </ol>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  body {
+    background-color: #222222f0;
+  }
+
+  h1 {
+    color: #99b7dc;
+  }
 </style>
