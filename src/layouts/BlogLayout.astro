@@ -1,0 +1,14 @@
+---
+import RootLayout from './RootLayout.astro';
+
+export interface Props {
+  useAnimation?: boolean;
+}
+const { useAnimation = false }: Props = Astro.props;
+---
+
+<RootLayout>
+  <div class='w-[80%] bg-[#222222a0]'>
+    <slot />
+  </div>
+</RootLayout>
