@@ -1,0 +1,42 @@
+---
+export interface Props {
+  useAnimation?: boolean;
+}
+const { useAnimation = false }: Props = Astro.props;
+---
+
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <meta name='generator' content={Astro.generator} />
+    <title>earlgray's portfolio</title>
+  </head>
+  <body class={useAnimation && 'animate-text-focus-in-1000'}>
+    <nav class='px-10 py-4 w-full flex'>
+      <a href='/'>
+        <span class='mx-2 text-xl text-darkwhite font-mono'>earlgray</span>
+      </a>
+      <div class='ml-auto'>
+        <a href='/blog'>
+          <span class='mx-2 text-lg text-darkwhite'>Blog</span>
+        </a>
+      </div>
+    </nav>
+
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  body {
+    background-color: #222222f0;
+  }
+
+  h1 {
+    color: #99b7dc;
+  }
+</style>
