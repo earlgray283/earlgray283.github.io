@@ -1,15 +1,19 @@
 ---
 import { toISOString } from '../utils/date';
 
+export type JobKind = 'Part-time job' | 'Internship' | 'Outsourcing';
+
 export interface Props {
   title: string;
   articleURL?: string;
   since: Date;
   until?: Date;
   summary?: string;
+  jobKind: JobKind;
 }
 
-const { title, since, until, summary, articleURL }: Props = Astro.props;
+const { title, since, until, summary, articleURL, jobKind }: Props =
+  Astro.props;
 ---
 
 <li class='mb-10 ml-6'>
@@ -21,7 +25,10 @@ const { title, since, until, summary, articleURL }: Props = Astro.props;
     <h3 class='text-xl dark:text-white'>
       {title}
     </h3>
-    <p class='text-gray-400'>
+    <p class='text-lg text-darkwhite'>
+      {jobKind}
+    </p>
+    <p class='text-xs text-gray-400'>
       <time datetime={since.toDateString()}>{toISOString(since)}</time>
       -
       <time datetime={until ? until.toDateString() : new Date().toDateString()}>
